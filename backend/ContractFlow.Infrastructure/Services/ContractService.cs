@@ -10,10 +10,14 @@ namespace ContractFlow.Infrastructure.Services;
 public class ContractService : IContractService
 {
     private readonly ContractFlowDbContext _context;
+    private readonly IAuditService _auditService;
 
-    public ContractService(ContractFlowDbContext context)
+    public ContractService(
+        ContractFlowDbContext context,
+        IAuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
 
     public async Task<IEnumerable<ContractDto>> GetAllAsync()
@@ -95,10 +99,8 @@ public class ContractService : IContractService
             Number = dto.Number,
             Title = dto.Title,
             Description = dto.Description,
-
             SupplierId = supplier.Id,
             SupplierName = supplier.Name,
-
             Value = dto.Value,
             StartDate = dto.StartDate,
             EndDate = dto.EndDate,
@@ -109,6 +111,13 @@ public class ContractService : IContractService
 
         _context.Contracts.Add(contract);
         await _context.SaveChangesAsync();
+
+        await _auditService.LogAsync(
+            "Create",
+            "Contract",
+            contract.Id,
+            $"Contrato {contract.Number} criado."
+        );
 
         return new ContractDto
         {
@@ -158,10 +167,8 @@ public class ContractService : IContractService
         contract.Number = dto.Number;
         contract.Title = dto.Title;
         contract.Description = dto.Description;
-
         contract.SupplierId = supplier.Id;
         contract.SupplierName = supplier.Name;
-
         contract.Value = dto.Value;
         contract.StartDate = dto.StartDate;
         contract.EndDate = dto.EndDate;
@@ -169,6 +176,73 @@ public class ContractService : IContractService
         contract.AutomaticRenewal = dto.AutomaticRenewal;
 
         await _context.SaveChangesAsync();
+
+        await _auditService.LogAsync(
+            "Update",
+            "Contract",
+            contract.Id,
+            $"Contrato {contract.Number} atualizado."
+        );
+
+        return true;
+    }
+
+    public async Task<bool> ApproveAsync(Guid id)
+    {
+        var contract = await _context.Contracts.FindAsync(id);
+
+        if (contract is null)
+        {
+            return false;
+        }
+
+        if (contract.Status != ContractStatus.AguardandoAprovacao)
+        {
+            throw new ArgumentException(
+                "Somente contratos aguardando aprovação podem ser aprovados."
+            );
+        }
+
+        contract.Status = ContractStatus.Ativo;
+
+        await _context.SaveChangesAsync();
+
+        await _auditService.LogAsync(
+            "Approve",
+            "Contract",
+            contract.Id,
+            $"Contrato {contract.Number} aprovado."
+        );
+
+        return true;
+    }
+
+    public async Task<bool> RejectAsync(Guid id)
+    {
+        var contract = await _context.Contracts.FindAsync(id);
+
+        if (contract is null)
+        {
+            return false;
+        }
+
+        if (contract.Status != ContractStatus.AguardandoAprovacao)
+        {
+            throw new ArgumentException(
+                "Somente contratos aguardando aprovação podem ser rejeitados."
+            );
+        }
+
+        contract.Status = ContractStatus.Rejeitado;
+
+        await _context.SaveChangesAsync();
+
+        await _auditService.LogAsync(
+            "Reject",
+            "Contract",
+            contract.Id,
+            $"Contrato {contract.Number} rejeitado."
+        );
 
         return true;
     }
@@ -182,6 +256,13 @@ public class ContractService : IContractService
             return false;
         }
 
+        await _auditService.LogAsync(
+            "Delete",
+            "Contract",
+            contract.Id,
+            $"Contrato {contract.Number} excluído."
+        );
+
         _context.Contracts.Remove(contract);
         await _context.SaveChangesAsync();
 
@@ -193,6 +274,11 @@ public class ContractService : IContractService
         if (contract.Status == ContractStatus.Cancelado)
         {
             return ContractStatus.Cancelado;
+        }
+
+        if (contract.Status == ContractStatus.Rejeitado)
+        {
+            return ContractStatus.Rejeitado;
         }
 
         if (contract.EndDate.Date < DateTime.UtcNow.Date)

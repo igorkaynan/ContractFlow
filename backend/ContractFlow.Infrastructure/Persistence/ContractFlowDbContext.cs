@@ -11,8 +11,10 @@ public class ContractFlowDbContext : DbContext
     }
 
     public DbSet<Contract> Contracts => Set<Contract>();
-
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<Supplier> Suppliers => Set<Supplier>();
+
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

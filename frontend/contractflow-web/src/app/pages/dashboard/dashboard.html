@@ -1,0 +1,17 @@
+<div class="page-head"><div><h1>Dashboard</h1><p>Visão geral da gestão de contratos</p></div><button routerLink="/contracts/new">+ Novo contrato</button></div>
+@if(errorMessage){<div class="alert">{{errorMessage}}</div>}
+<section class="cards">
+  <div class="card"><span>Total de contratos</span><strong>{{dashboard.totalContracts}}</strong><small>Contratos cadastrados</small></div>
+  <div class="card"><span>Contratos ativos</span><strong>{{dashboard.activeContracts}}</strong><small>Em vigência atualmente</small></div>
+  <div class="card"><span>Vencidos</span><strong>{{dashboard.expiredContracts}}</strong><small>Necessitam atenção</small></div>
+  <a class="card card-link" routerLink="/contracts" [queryParams]="{filter:'expiring30'}"><span>Vencem em 30 dias</span><strong>{{dashboard.expiringIn30Days}}</strong><small>Próximos vencimentos · ver contratos</small></a>
+</section>
+<section class="grid">
+  <div class="panel"><div class="panel-head"><div><h2>Contratos recentes</h2><p>Últimos contratos cadastrados</p></div><a routerLink="/contracts">Ver contratos</a></div>
+    <div class="table-wrap"><table><thead><tr><th>Contrato</th><th>Fornecedor</th><th>Status</th><th>Valor</th></tr></thead><tbody>
+      @for(c of recentContracts;track c.id){<tr><td><strong>{{c.number}}</strong><br><small>{{c.title}}</small></td><td>{{c.supplierName||'Sem fornecedor'}}</td><td><span class="status" [class.active]="c.status==='Ativo'" [class.expired]="c.status==='Vencido'" [class.pending]="c.status==='AguardandoAprovacao'">{{c.status==='AguardandoAprovacao'?'Aguardando aprovação':c.status}}</span></td><td>{{c.value|currency:'BRL':'symbol':'1.2-2'}}</td></tr>}
+      @if(!recentContracts.length&&!loading){<tr><td colspan="4" class="empty">Nenhum contrato encontrado.</td></tr>}
+    </tbody></table></div>
+  </div>
+  <div class="panel summary"><h2>Resumo financeiro</h2><p>Valor total dos contratos</p><div class="money"><span>Valor contratado</span><strong>{{dashboard.totalValue|currency:'BRL':'symbol':'1.2-2'}}</strong></div><div class="line"><span>Ativos</span><strong>{{dashboard.activeContracts}}</strong></div><div class="line"><span>Vencidos</span><strong>{{dashboard.expiredContracts}}</strong></div><a class="line pending-link" routerLink="/approvals"><span>Aguardando aprovação</span><strong>{{dashboard.pendingApprovalContracts}}</strong></a></div>
+</section>

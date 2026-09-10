@@ -6,5 +6,6 @@ public enum ContractStatus
     AguardandoAprovacao = 2,
     Ativo = 3,
     Vencido = 4,
-    Cancelado = 5
+    Cancelado = 5,
+    Rejeitado = 6
 }

@@ -1,0 +1,11 @@
+**/bin
+**/obj
+**/node_modules
+**/.angular
+**/.git
+**/.vs
+**/.vscode
+**/dist
+**/coverage
+*.user
+*.suo

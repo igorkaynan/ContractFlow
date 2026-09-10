@@ -12,5 +12,9 @@ public interface IContractService
 
     Task<bool> UpdateAsync(Guid id, UpdateContractDto dto);
 
+    Task<bool> ApproveAsync(Guid id);
+
+    Task<bool> RejectAsync(Guid id);
+
     Task<bool> DeleteAsync(Guid id);
 }

@@ -1,0 +1,33 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">CF</div>
+      <div><strong>ContractFlow</strong><span>Gestão de Contratos</span></div>
+    </div>
+
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/contracts" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Contratos</a>
+      <a routerLink="/suppliers" routerLinkActive="active">Fornecedores</a>
+      <a routerLink="/approvals" routerLinkActive="active">Aprovações</a>
+      <a routerLink="/audit" routerLinkActive="active">Auditoria</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span>Sistema corporativo</span>
+      <strong>ContractFlow</strong>
+    </div>
+  </aside>
+
+  <section class="main-area">
+    <header class="top-userbar">
+      <div></div>
+      <div class="user-box">
+        <div class="avatar">{{ initials }}</div>
+        <div class="user-meta"><strong>{{ user?.name || 'Usuário' }}</strong><span>{{ user?.role || 'User' }}</span></div>
+        <button class="logout" type="button" (click)="logout()">Sair</button>
+      </div>
+    </header>
+    <main class="page-content"><router-outlet></router-outlet></main>
+  </section>
+</div>

@@ -1,0 +1,21 @@
+<div class="login-page">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-brand"><span>CF</span><strong>ContractFlow</strong></div>
+      <h1>Gestão de contratos com mais controle e menos risco.</h1>
+      <p>Centralize fornecedores, aprovações, vencimentos e auditoria em um único ambiente corporativo.</p>
+      <div class="features"><span>✓ Controle de vencimentos</span><span>✓ Fluxo de aprovação</span><span>✓ Auditoria e rastreabilidade</span></div>
+    </div>
+  </section>
+  <section class="form-area">
+    <form (ngSubmit)="login()">
+      <div class="mobile-brand">ContractFlow</div>
+      <h2>Acesse sua conta</h2><p>Entre para continuar no sistema.</p>
+      <label>E-mail</label><input name="email" [(ngModel)]="email" type="email" placeholder="seu@email.com" autocomplete="email">
+      <label>Senha</label><input name="password" [(ngModel)]="password" type="password" placeholder="Sua senha" autocomplete="current-password">
+      @if(errorMessage){<div class="error">{{ errorMessage }}</div>}
+      <button type="submit" [disabled]="loading">{{ loading ? 'Entrando...' : 'Entrar' }}</button>
+      <small>ContractFlow • Ambiente corporativo</small>
+    </form>
+  </section>
+</div>

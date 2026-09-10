@@ -1,11 +1,13 @@
 ﻿using ContractFlow.Application.DTOs;
 using ContractFlow.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContractFlow.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class SuppliersController : ControllerBase
 {
     private readonly ISupplierService _supplierService;
@@ -28,9 +30,7 @@ public class SuppliersController : ControllerBase
         var supplier = await _supplierService.GetByIdAsync(id);
 
         if (supplier is null)
-        {
             return NotFound();
-        }
 
         return Ok(supplier);
     }
@@ -62,9 +62,7 @@ public class SuppliersController : ControllerBase
             var updated = await _supplierService.UpdateAsync(id, dto);
 
             if (!updated)
-            {
                 return NotFound();
-            }
 
             return NoContent();
         }
@@ -74,15 +72,14 @@ public class SuppliersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Admin,Manager")]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var deleted = await _supplierService.DeleteAsync(id);
 
         if (!deleted)
-        {
             return NotFound();
-        }
 
         return NoContent();
     }

@@ -1,4 +1,4 @@
-﻿using ContractFlow.Application.DTOs;
+using ContractFlow.Application.DTOs;
 using ContractFlow.Application.Services;
 using ContractFlow.Domain.Entities;
 using ContractFlow.Infrastructure.Persistence;
@@ -110,11 +110,21 @@ public class SupplierService : ISupplierService
 
     public async Task<bool> DeleteAsync(Guid id)
     {
-        var supplier = await _context.Suppliers.FindAsync(id);
+        var supplier = await _context.Suppliers
+            .Include(s => s.Contracts)
+            .FirstOrDefaultAsync(s => s.Id == id);
 
         if (supplier is null)
         {
             return false;
+        }
+
+        // Mantém os contratos existentes e apenas remove o vínculo com o fornecedor.
+        // O SupplierName permanece gravado no contrato para preservar o histórico.
+        foreach (var contract in supplier.Contracts)
+        {
+            contract.SupplierId = null;
+            contract.Supplier = null;
         }
 
         _context.Suppliers.Remove(supplier);

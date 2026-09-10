@@ -6,4 +6,7 @@
     <Project Path="backend/ContractFlow.Infrastructure/ContractFlow.Infrastructure.csproj" />
     <Project Path="backend/ContractFlow.Tests/ContractFlow.Tests.csproj" />
   </Folder>
+  <Folder Name="/Itens de Solução/">
+    <File Path=".dockerignore" />
+  </Folder>
 </Solution>

@@ -1,0 +1,43 @@
+<div class="page-head">
+  <div><h1>Contratos</h1><p>Gerencie os contratos cadastrados no sistema</p></div>
+  <button routerLink="/contracts/new">+ Novo contrato</button>
+</div>
+
+@if(filterExpiring30){<div class="success">Exibindo contratos ativos que vencem nos próximos 30 dias. <a routerLink="/contracts">Ver todos</a></div>}
+@if(successMessage){<div class="success">{{successMessage}}</div>}
+@if(errorMessage){<div class="error">{{errorMessage}}</div>}
+
+<div class="panel">
+  <div class="panel-head">
+    <div><h2>Lista de contratos</h2><p>{{contracts.length}} contratos encontrados</p></div>
+    <button type="button" class="secondary" (click)="loadContracts(true)">Atualizar</button>
+  </div>
+
+  @if(loading){
+    <div class="message">Carregando contratos...</div>
+  } @else {
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Número</th><th>Contrato</th><th>Fornecedor</th><th>Início</th><th>Vencimento</th><th>Status</th><th>Valor</th><th>Ações</th></tr></thead>
+        <tbody>
+          @for(c of contracts; track c.id){
+            <tr>
+              <td><strong>{{c.number}}</strong></td>
+              <td>{{c.title}}</td>
+              <td>{{c.supplierName || 'Sem fornecedor'}}</td>
+              <td>{{c.startDate | date:'dd/MM/yyyy'}}</td>
+              <td>{{c.endDate | date:'dd/MM/yyyy'}}</td>
+              <td><span class="status" [class.active]="c.status==='Ativo'" [class.expired]="c.status==='Vencido'" [class.pending]="c.status==='AguardandoAprovacao'" [class.rejected]="c.status==='Rejeitado'" [class.cancelled]="c.status==='Cancelado'"><span class="status-dot"></span>{{c.status==='AguardandoAprovacao'?'Aguardando aprovação':c.status}}</span></td>
+              <td>{{c.value | currency:'BRL':'symbol':'1.2-2'}}</td>
+              <td class="row-actions">
+                <a [routerLink]="['/contracts', c.id, 'edit']">Editar</a>
+                @if(canDelete){<button type="button" class="danger-link" [disabled]="deletingId===c.id" (click)="deleteContract(c)">{{deletingId===c.id?'Excluindo...':'Excluir'}}</button>}
+              </td>
+            </tr>
+          }
+          @if(!contracts.length){<tr><td colspan="8" class="empty">Nenhum contrato cadastrado.</td></tr>}
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

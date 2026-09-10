@@ -1,0 +1,23 @@
+<div class="page-head">
+  <div><h1>{{editing ? 'Editar contrato' : 'Novo contrato'}}</h1><p>{{editing ? 'Atualize os dados do contrato' : 'Cadastre um novo contrato empresarial'}}</p></div>
+  <a routerLink="/contracts">Voltar</a>
+</div>
+
+@if(loading){<div class="panel">Carregando contrato...</div>} @else {
+<form class="panel" (ngSubmit)="save()">
+  <div class="section-title"><h2>Informações do contrato</h2><p>Preencha os dados principais.</p></div>
+  <div class="form-grid">
+    <div><label>Número *</label><input name="number" [(ngModel)]="model.number" placeholder="Ex.: CTR-121"></div>
+    <div><label>Título *</label><input name="title" [(ngModel)]="model.title" placeholder="Nome do contrato"></div>
+    <div class="full"><label>Descrição</label><textarea name="description" [(ngModel)]="model.description" rows="4" placeholder="Descrição do contrato"></textarea></div>
+    <div><label>Fornecedor *</label><select name="supplierId" [(ngModel)]="model.supplierId"><option value="">Selecione</option>@for(s of suppliers;track s.id){<option [value]="s.id">{{s.name}}</option>}</select></div>
+    <div><label>Valor *</label><input name="value" [(ngModel)]="model.value" type="number" min="0.01" step="0.01" placeholder="0,00"></div>
+    <div><label>Data inicial *</label><input name="startDate" [(ngModel)]="model.startDate" type="date"></div>
+    <div><label>Data final *</label><input name="endDate" [(ngModel)]="model.endDate" type="date"></div>
+    <div><label>Status</label><select name="status" [(ngModel)]="model.status"><option value="Rascunho">Rascunho</option><option value="AguardandoAprovacao">Aguardando aprovação</option><option value="Ativo">Ativo</option><option value="Cancelado">Cancelado</option><option value="Rejeitado">Rejeitado</option></select></div>
+    <label class="checkbox"><input name="automaticRenewal" [(ngModel)]="model.automaticRenewal" type="checkbox"> Renovação automática</label>
+  </div>
+  @if(errorMessage){<div class="error">{{errorMessage}}</div>}
+  <div class="actions"><a routerLink="/contracts">Cancelar</a><button type="submit" [disabled]="saving">{{saving ? 'Salvando...' : (editing ? 'Salvar alterações' : 'Salvar contrato')}}</button></div>
+</form>
+}

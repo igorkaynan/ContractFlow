@@ -1,0 +1,15 @@
+:host { display:block; width:100%; height:100vh; overflow:hidden; }
+.app-shell { display:flex; width:100%; height:100vh; background:#f5f7fb; }
+.sidebar { width:250px; height:100vh; flex-shrink:0; background:#172554; color:#fff; padding:24px 20px; display:flex; flex-direction:column; }
+.brand { display:flex; align-items:center; gap:12px; margin-bottom:38px; }
+.logo { width:44px; height:44px; border-radius:12px; background:#fff; color:#1d4ed8; display:grid; place-items:center; font-weight:800; }
+.brand strong,.brand span { display:block; }.brand strong{font-size:16px}.brand span{font-size:11px;color:#bfdbfe;margin-top:2px}
+nav { display:grid; gap:8px; }
+nav a { text-decoration:none; color:#dbeafe; padding:12px 14px; border-radius:9px; font-size:14px; transition:.2s; }
+nav a:hover, nav a.active { background:rgba(255,255,255,.12); color:#fff; }
+.sidebar-footer { margin-top:auto; font-size:11px; color:#93c5fd; }.sidebar-footer span,.sidebar-footer strong{display:block}.sidebar-footer strong{color:#fff;margin-top:4px}
+.main-area { flex:1; min-width:0; height:100vh; display:flex; flex-direction:column; }
+.top-userbar { height:76px; flex-shrink:0; display:flex; justify-content:space-between; align-items:center; padding:0 30px; background:#fff; border-bottom:1px solid #e8edf5; }
+.user-box{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;background:#e8efff;color:#1d4ed8;display:grid;place-items:center;font-size:12px;font-weight:800}.user-meta strong,.user-meta span{display:block}.user-meta strong{font-size:13px}.user-meta span{font-size:11px;color:#64748b;margin-top:2px}.logout{margin-left:8px;border:1px solid #dce3ef;background:#fff;color:#475569;border-radius:8px;padding:8px 11px;font-size:12px}.logout:hover{background:#f8fafc}
+.page-content { flex:1; overflow-y:auto; overflow-x:hidden; padding:30px; }
+@media(max-width:800px){.sidebar{display:none}.page-content{padding:20px}.top-userbar{padding:0 20px}}

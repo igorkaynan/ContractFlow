@@ -1,11 +1,13 @@
-﻿using ContractFlow.Application.DTOs;
+using ContractFlow.Application.DTOs;
 using ContractFlow.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContractFlow.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ContractsController : ControllerBase
 {
     private readonly IContractService _contractService;
@@ -75,6 +77,49 @@ public class ContractsController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Admin,Manager")]
+    [HttpPut("{id:guid}/approve")]
+    public async Task<IActionResult> Approve(Guid id)
+    {
+        try
+        {
+            var approved = await _contractService.ApproveAsync(id);
+
+            if (!approved)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [Authorize(Roles = "Admin,Manager")]
+    [HttpPut("{id:guid}/reject")]
+    public async Task<IActionResult> Reject(Guid id)
+    {
+        try
+        {
+            var rejected = await _contractService.RejectAsync(id);
+
+            if (!rejected)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [Authorize(Roles = "Admin,Manager")]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {

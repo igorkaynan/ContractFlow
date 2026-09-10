@@ -1,0 +1,5 @@
+<div class="page-head"><div><h1>Auditoria</h1><p>Histórico de ações realizadas no sistema</p></div></div>
+@if(errorMessage){<div class="error">{{errorMessage}}</div>}
+<div class="panel"><div class="panel-head"><div><h2>Registro de atividades</h2><p>{{logs.length}} eventos encontrados</p></div></div>
+@if(loading){<div class="empty">Carregando...</div>} @else if(!logs.length){<div class="empty">Nenhum registro encontrado.</div>} @else {<div class="timeline">@for(log of logs;track log.id){<div class="event"><div class="dot"></div><div class="event-body"><div class="event-head"><strong>{{label(log.action)}}</strong><span>{{log.createdAt|date:'dd/MM/yyyy HH:mm'}}</span></div><p>{{log.details}}</p><small>{{log.entityType}} • {{log.entityId}}</small></div></div>}</div>}
+</div>
