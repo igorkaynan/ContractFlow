@@ -59,7 +59,7 @@ O projeto utiliza uma arquitetura em camadas, separando responsabilidades entre 
                             ▼
                   ┌───────────────────┐
                   │  Infrastructure   │
-                  │ Entity Framework │
+                  │ Entity Framework  │
                   │       Core        │
                   └─────────┬─────────┘
                             │
@@ -579,25 +579,23 @@ docs/screenshots/audit.png
 
 Depois você pode exibi-las aqui:
 
-### Dashboard
+### Login
+<img width="1366" height="768" alt="0 - login" src="https://github.com/user-attachments/assets/2ac4e7ef-5a50-438d-b68a-2583bce8a2d1" />
 
-![Dashboard do ContractFlow](docs/screenshots/dashboard.png)
+### Dashboard
+<img width="1366" height="768" alt="1-dashboard" src="https://github.com/user-attachments/assets/1c088df8-2b4b-4aeb-bc24-7400ab2afa1d" />
 
 ### Contratos
-
-![Gestão de contratos](docs/screenshots/contracts.png)
+<img width="1366" height="768" alt="2-contratos" src="https://github.com/user-attachments/assets/16ec9f8d-e132-457f-980e-fe4cafd99c13" />
 
 ### Fornecedores
-
-![Gestão de fornecedores](docs/screenshots/suppliers.png)
+<img width="1364" height="768" alt="3-fornecedores" src="https://github.com/user-attachments/assets/8de54d4d-ae2e-45ba-a685-2ebc1d75c6b1" />
 
 ### Aprovações
-
-![Fluxo de aprovações](docs/screenshots/approvals.png)
+<img width="1366" height="768" alt="4-aprovacoes" src="https://github.com/user-attachments/assets/fba90094-e374-48cd-8c90-f4b3b094eb0f" />
 
 ### Auditoria
-
-![Auditoria do ContractFlow](docs/screenshots/audit.png)
+<img width="1366" height="768" alt="5-auditoria" src="https://github.com/user-attachments/assets/2152666d-af33-4b8a-8e0b-576efa0e512e" />
 
 ---
 
