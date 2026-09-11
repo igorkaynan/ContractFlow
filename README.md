@@ -6,6 +6,9 @@ O ContractFlow centraliza contratos, fornecedores, aprovações, vencimentos e a
 
 ---
 
+<img width="1536" height="1024" alt="WhatsApp Image 2026-09-10 at 15 52 25" src="https://github.com/user-attachments/assets/c162641a-ff58-42e9-87db-d4c3e8879d0f" />
+
+
 ## Sobre o projeto
 
 Empresas precisam acompanhar contratos, fornecedores, valores, responsáveis, aprovações e principalmente datas de vencimento.
